@@ -3,6 +3,8 @@ require 'spec_helper'
 describe Admin::SettingsController do
   render_views
 
+ 
+
   before(:each) do
     Factory(:blog)
     #TODO Remove this line after remove FIXTURE
@@ -20,6 +22,9 @@ describe Admin::SettingsController do
       response.should render_template('index')
     end
   end
+
+
+
 
   describe 'write action' do
     before(:each) do

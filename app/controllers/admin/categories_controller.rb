@@ -14,18 +14,27 @@ class Admin::CategoriesController < Admin::BaseController
   end
 
   def destroy
+    
     @record = Category.find(params[:id])
-    return(render 'admin/shared/destroy') unless request.post?
+    if(@record != nil)
+      return(render 'admin/shared/destroy') unless request.post?
 
-    @record.destroy
-    redirect_to :action => 'new'
+      @record.destroy
+      redirect_to :action => 'new'
+    end
   end
 
-  private
+  
 
   def new_or_edit
     @categories = Category.find(:all)
-    @category = Category.find(params[:id])
+    
+  if(params[:id] != nil)
+      @category = Category.find(params[:id])
+    else
+      @category = Category.new
+    end
+    
     @category.attributes = params[:category]
     if request.post?
       respond_to do |format|
@@ -42,6 +51,7 @@ class Admin::CategoriesController < Admin::BaseController
     render 'new'
   end
 
+
   def save_category
     if @category.save!
       flash[:notice] = _('Category was successfully saved.')
@@ -50,5 +60,6 @@ class Admin::CategoriesController < Admin::BaseController
     end
     redirect_to :action => 'new'
   end
+
 
 end

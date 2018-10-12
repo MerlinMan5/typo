@@ -3,6 +3,44 @@ require 'spec_helper'
 describe Admin::CategoriesController do
   render_views
 
+
+describe '.save' do
+  it 'should not save category' do
+    newCat =  {name: 'almostt best movie ever', keywords: 'cool', description: 'so good'}
+    get :save_category, category: newCat
+  end
+end
+
+
+
+  describe '.new_or_edit' do 
+      it 'should create a category' do
+        newCat =  {name: 'almostt best movie ever', keywords: 'cool', description: 'so good'}
+        post :new_or_edit, category: newCat
+    end
+  end
+
+
+  
+  describe '.edit' do
+    it 'should change category' do
+      newCat =  {name: 'almostt best movie ever', keywords: 'cool', description: 'so good'}
+      post :edit, category: newCat
+      expect(:category).not_to be_empty
+    end
+  end
+  
+  
+  describe '.new' do
+      it 'should make a category' do
+        newCat =  {name: 'best movie ever', keywords: 'cool', permalink: 'like', description: 'so good'}
+        post :new, category: newCat
+        assert_not_nil assigns(:category)
+    end
+  end
+  
+  
+    
   before(:each) do
     Factory(:blog)
     #TODO Delete after removing fixtures
